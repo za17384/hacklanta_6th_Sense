@@ -1,0 +1,17 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+node_modules/
+dist/
+*.log
+.DS_Store
+
+# test clips are personal video; only commit with explicit consent
+test-clips/*
+!test-clips/.gitkeep
+
+# large model/wasm assets are fetched by scripts/fetch-models.ts
+apps/web/public/models/*.task
+apps/web/public/mediapipe/wasm/*

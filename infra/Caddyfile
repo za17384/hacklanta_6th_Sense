@@ -1,0 +1,17 @@
+{$DOMAIN}, www.{$DOMAIN} {
+	encode gzip zstd
+
+	handle /api/* {
+		reverse_proxy api:8080 {
+			flush_interval -1   # SSE (demo feed)
+		}
+	}
+
+	handle {
+		root * /srv/web
+		@models path /models/* /mediapipe/*
+		header @models Cache-Control "public, max-age=604800"
+		try_files {path} /index.html
+		file_server
+	}
+}

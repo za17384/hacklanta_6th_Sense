@@ -1,0 +1,13 @@
+# Local TimescaleDB for development (optional — DEMO_MODE works without any DB).
+#   docker compose -f infra/docker-compose.local-db.yml up -d
+#   DATABASE_URL=postgres://postgres:postgres@localhost:5432/reprally bun run migrate
+services:
+  db:
+    image: timescale/timescaledb-ha:pg17
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: reprally
+    ports: ["5432:5432"]
+    volumes: [pgdata:/home/postgres/pgdata/data]
+volumes:
+  pgdata:

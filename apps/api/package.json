@@ -1,0 +1,24 @@
+{
+  "name": "@rep-rally/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "agent": "bun src/agent.ts",
+    "migrate": "bun src/migrate.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@rep-rally/shared": "workspace:*",
+    "hono": "^4.13.13",
+    "pg": "^8.23.1",
+    "spectrum-ts": "^12.10.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "bun-types": "^1.4.3",
+    "typescript": "^7.0.2"
+  }
+}

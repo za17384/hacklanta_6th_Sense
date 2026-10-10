@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { min-height: 100%; }
+body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+
+@layer components {
+  .card { @apply rounded-2xl border border-white/10 bg-stage-900/80 backdrop-blur p-4; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition active:scale-[.98] disabled:opacity-40; }
+  .btn-primary { @apply btn bg-neon-pink text-white shadow-[0_0_24px_rgba(255,62,165,.45)] hover:brightness-110; }
+  .btn-ghost { @apply btn border border-white/15 bg-white/5 hover:bg-white/10; }
+  .input { @apply w-full rounded-xl border border-white/15 bg-stage-800 px-4 py-3 outline-none focus:border-neon-cyan; }
+  .label { @apply text-xs uppercase tracking-widest text-white/50; }
+  .title { @apply font-display tracking-wide; }
+}
+
+/* Festival stage lights */
+.beams::before, .beams::after {
+  content: ""; position: fixed; top: -20vh; width: 60vw; height: 140vh; pointer-events: none; z-index: 0;
+  background: linear-gradient(180deg, rgba(255,62,165,.18), transparent 70%);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%); transform-origin: top center;
+  animation: beam 7s ease-in-out infinite;
+}
+.beams::before { left: -10vw; }
+.beams::after { right: -10vw; background: linear-gradient(180deg, rgba(34,227,255,.16), transparent 70%); animation-delay: -3.5s; }
+@keyframes beam { 0%,100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+@media (prefers-reduced-motion: reduce) { .beams::before, .beams::after { animation: none; } }

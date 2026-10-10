@@ -1,0 +1,15 @@
+{
+  "name": "rep-rally",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*", "db"],
+  "scripts": {
+    "dev": "bun run scripts/dev.ts",
+    "dev:web": "bun --cwd apps/web run dev",
+    "dev:api": "bun --cwd apps/api run dev",
+    "fetch-models": "bun run scripts/fetch-models.ts",
+    "migrate": "bun --cwd apps/api run migrate",
+    "seed": "bun run db/seed/seed_demo.ts",
+    "test": "bun test packages/shared",
+    "typecheck": "bun --cwd apps/web run typecheck && bun --cwd apps/api run typecheck"
+  }
+}

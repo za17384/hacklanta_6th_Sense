@@ -1,0 +1,8 @@
+node_modules
+**/node_modules
+.env
+.env.*
+!.env.example
+test-clips
+apps/web/dist
+.git

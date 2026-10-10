@@ -1,0 +1,39 @@
+# Production on the Vultr VM:  docker compose -f infra/docker-compose.yml --env-file .env up -d --build
+# Tiger Cloud is external (DATABASE_URL). Video never reaches this server — only JSON.
+services:
+  api:
+    build: { context: .., dockerfile: infra/Dockerfile }
+    env_file: ../.env
+    environment:
+      RUN_AGENT_IN_API: "false"   # the agent service owns the inbound loop + scheduler
+    restart: unless-stopped
+
+  agent:
+    build: { context: .., dockerfile: infra/Dockerfile }
+    env_file: ../.env
+    command: ["bun", "apps/api/src/agent.ts"]
+    restart: unless-stopped
+
+  web-build:
+    # Copies the built SPA out of the image into a volume Caddy serves.
+    build: { context: .., dockerfile: infra/Dockerfile }
+    command: ["sh", "-c", "rm -rf /out/* && cp -r apps/web/dist/. /out/"]
+    volumes: [web:/out]
+
+  caddy:
+    image: caddy:2.8
+    depends_on: [api, web-build]
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env, e.g. reprally.tech}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - web:/srv/web:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+
+volumes:
+  web:
+  caddy_data:
+  caddy_config:
