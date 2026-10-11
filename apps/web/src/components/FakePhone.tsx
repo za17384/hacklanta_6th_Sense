@@ -6,7 +6,7 @@ import { api } from "../lib/api";
 
 interface FeedItem { id: number; ts: string; direction: "out" | "in"; to?: string; from?: string; group?: string; text: string }
 
-export function FakePhone({ hasPhone }: { hasPhone: boolean }) {
+export function FakePhone({ hasPhone, lift = false }: { hasPhone: boolean; lift?: boolean }) {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState<FeedItem[]>([]);
   const [unread, setUnread] = useState(0);
@@ -37,11 +37,11 @@ export function FakePhone({ hasPhone }: { hasPhone: boolean }) {
   return (
     <>
       <button onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-4 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-neon-cyan text-2xl text-black shadow-[0_0_24px_rgba(34,227,255,.5)]">
+        className={`fixed right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-neon-cyan text-2xl text-black shadow-[0_0_24px_rgba(34,227,255,.5)] ${lift ? "bottom-24" : "bottom-4"}`}>
         💬{unread > 0 && <span className="absolute -right-1 -top-1 rounded-full bg-neon-pink px-1.5 text-xs text-white">{unread}</span>}
       </button>
       {open && (
-        <div className="fixed bottom-20 right-4 z-40 flex h-[70vh] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[2rem] border-4 border-white/20 bg-black">
+        <div className={`fixed right-4 z-40 flex h-[70vh] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[2rem] border-4 border-white/20 bg-black ${lift ? "bottom-40" : "bottom-20"}`}>
           <div className="border-b border-white/10 py-2 text-center text-xs text-white/60">
             <div className="font-semibold text-white">Rep Rally Agent</div>DEMO phone · console messenger
           </div>
